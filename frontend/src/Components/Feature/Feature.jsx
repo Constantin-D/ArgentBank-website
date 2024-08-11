@@ -1,8 +1,8 @@
 import React from "react";
-import "./features.scss";
-import chatIcon from "../../assets/images/icon-chat.png";
-import moneyIcon from "../../assets/images/icon-money.png";
-import securityIcon from "../../assets/images/icon-security.png";
+import "./feature.scss";
+import chatIcon from "./../../assets/images/icon-chat-min.webp";
+import moneyIcon from "./../../assets/images/icon-money-min.webp";
+import securityIcon from "./../../assets/images/icon-security-min.webp";
 
 function Features() {
     return (
