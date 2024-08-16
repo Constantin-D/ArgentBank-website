@@ -1,52 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../redux/reducers/userSlice";
+
 import "./profile-form.scss";
-import Transaction from "./../Transaction/Transaction";
-// import Nav from "./../Nav/Nav";
 
 const ProfileForm = () => {
-    const userName = "Tony";
+    const user = useSelector((state) => state.user);
+    const dispatch = useDispatch();
 
-    const accounts = [
-        {
-            title: "Argent Bank Checking (x8349)",
-            amount: "$2,082.79",
-            description: "Available Balance",
-        },
-        {
-            title: "Argent Bank Savings (x6712)",
-            amount: "$10,928.42",
-            description: "Available Balance",
-        },
-        {
-            title: "Argent Bank Credit Card (x8349)",
-            amount: "$184.30",
-            description: "Current Balance",
-        },
-    ];
+    const [name, setName] = useState(user.name);
+    const [email, setEmail] = useState(user.email);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(setUser({ name, email }));
+        console.log("User updated:", { name, email });
+    };
 
     return (
-        <>
-            {/* <Nav userName={userName} /> */}
-            <main className="main bg-dark">
-                <div className="header">
-                    <h1>
-                        Welcome back
-                        <br />
-                        {userName}!
-                    </h1>
-                    <button className="edit-button">Edit Name</button>
-                </div>
-                <h2 className="sr-only">Accounts</h2>
-                {accounts.map((account, index) => (
-                    <Transaction
-                        key={index}
-                        title={account.title}
-                        amount={account.amount}
-                        description={account.description}
-                    />
-                ))}
-            </main>
-        </>
+        <div className="header">
+            <div>
+                <h1>
+                    Welcome back
+                    <br />
+                    {user.name}!
+                    {/* Plus tard => First name & Last name en Data */}
+                </h1>
+                <button className="edit-button">Edit Name</button>
+            </div>
+            <div>
+                <form className="profile-form" onSubmit={handleSubmit}>
+                    <h2>Edit Profile</h2>
+                    <div className="form-group">
+                        <label htmlFor="name">Name:</label>
+                        <input
+                            type="text"
+                            id="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="email">Email:</label>
+                        <input
+                            type="email"
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
+                    <button type="submit" className="save-button">
+                        Save Changes
+                    </button>
+                </form>
+            </div>
+        </div>
     );
 };
 

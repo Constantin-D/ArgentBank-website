@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import "./login-form.scss";
 
 const LoginForm = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [rememberMe, setRememberMe] = useState(false);
@@ -47,6 +49,7 @@ const LoginForm = () => {
                     console.log("Token: ", token);
                     dispatch(login(responseJson.token));
                     // dispatch(login(responseJson.body.token));
+                    navigate("/profile");
                 } else {
                     const error = await response.json();
                     dispatch(loginFailure({error: error.message}));

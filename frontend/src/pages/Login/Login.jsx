@@ -1,13 +1,15 @@
 import React from "react";
 import Nav from "./../../Components/Nav/Nav";
-import Signin from "../../Components/Signin/Signin";
+import LoginForm from "../../Components/LoginForm/LoginForm";
 import Footer from "./../../Components/Footer/Footer";
 
 function Login() {
     return (
-        <div className="login-page">
+        <div>
             <Nav />
-            <Signin />
+            <main className="main bg-dark">
+                <LoginForm />
+            </main>
             <Footer />
         </div>
     );
