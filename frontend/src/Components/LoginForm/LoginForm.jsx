@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { login, loginFailure } from "../../redux/reducers/authenticationSlice";
 
 import "./login-form.scss";
 
@@ -34,7 +35,7 @@ const LoginForm = () => {
         event.preventDefault();
         if (validate()) {
             try {
-                const response = await fetch("http://locahost:3001/api/v1/user/login", {
+                const response = await fetch("http://localhost:3001/api/v1/user/login", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
