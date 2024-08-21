@@ -5,33 +5,25 @@
     "description": "Project #10 - Argent Bank",
     "keywords": [],
     "author": "",
-    "license": "MIT",
+    "license": "",
     "main": "index.js",
     "dependencies": {
-        "axios": "^1.7.4",
+        "axios": "^0.19.2",
         "bcrypt": "^5.0.0",
-        "buffer-equal-constant-time": "^1.0.1",
         "cors": "^2.8.5",
-        "dotenv": "^16.4.5",
-        "express": "^4.19.2",
-        "jsonwebtoken": "^9.0.2",
-        "mongoose": "^8.5.3",
-        "react-router-dom": "^6.26.1",
-        "safe-buffer": "^5.2.1",
-        "safer-buffer": "^2.1.2",
-        "swagger-ui-express": "^5.0.1",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "jsonwebtoken": "^8.5.1",
+        "mongoose": "^5.9.21",
+        "swagger-ui-express": "^4.1.4",
         "yamljs": "^0.3.0"
     },
     "scripts": {
         "dev:server": "nodemon ./server/server.js",
-        "dev:serveur": "npm run dev:server",
         "populate-db": "node ./server/scripts/populateDatabase.js",
-        "server": "node ./server/server.js",
-        "start-frontend": "cd frontend/argent-bank-frontend && npm run dev"
+        "server": "node ./server/server.js"
     },
     "devDependencies": {
-        "jest": "^29.7.0",
-        "nodemon": "^3.1.4",
-        "sass": "^1.77.8"
+        "nodemon": "^2.0.4"
     }
 }

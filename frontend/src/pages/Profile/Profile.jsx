@@ -1,14 +1,46 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Footer from "./../../Components/Footer/Footer";
 import Nav from "./../../Components/Nav/Nav";
 import ProfileForm from "./../../Components/ProfileForm/ProfileForm";
 import Transaction from "./../../Components/Transaction/Transaction";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "./../../redux/reducers/userSlice";
 
 import "./profile.scss";
 
 function Profile() {
-    const isLoggedIn = true;
-    const userName = "Tony";
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.user);
+    const token = useSelector((state) => state.authentication.token);
+
+    useEffect(() => {
+        const fetchUserProfile = async () => {
+            try {
+                const response = await fetch(
+                    "http://localhost:3001/api/v1/user/profile",
+                    {
+                        method: "POST",
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    dispatch(setUser(data.body));
+                } else {
+                    console.error("Error fetching user profile:", data.message);
+                }
+            } catch (error) {
+                console.error("Failed to fetch user profile:", error);
+            }
+        };
+
+        fetchUserProfile();
+    }, [dispatch, token]);
 
     const accounts = [
         {
@@ -30,9 +62,9 @@ function Profile() {
 
     return (
         <div>
-            <Nav isLoggedIn={isLoggedIn} userName={userName} />
+            <Nav isLoggedIn={true} userName={user.userName} />
             <main className="main bg-dark">
-                <ProfileForm userName={userName} />
+                <ProfileForm />
                 <h2 className="sr-only">Accounts</h2>
                 {accounts.map((account, index) => (
                     <Transaction

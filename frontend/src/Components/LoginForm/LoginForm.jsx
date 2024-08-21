@@ -34,22 +34,23 @@ const LoginForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (validate()) {
+            let email = username;
             try {
                 const response = await fetch("http://localhost:3001/api/v1/user/login", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ username, password }),
+                    body: JSON.stringify({ email, password }),
                 });
 
                 if (response.ok) {
                     const responseJson = await response.json();
-                    const token = responseJson.token;
+                    const token = responseJson.body.token;
                     console.log(responseJson);
                     console.log("Token: ", token);
-                    dispatch(login(responseJson.token));
-                    // dispatch(login(responseJson.body.token));
+                    // dispatch(login(responseJson.token));
+                    dispatch(login({ token }));
                     navigate("/profile");
                 } else {
                     const error = await response.json();

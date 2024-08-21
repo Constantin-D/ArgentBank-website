@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import e from "express";
 
 export const authenticationSlice = createSlice({
     name: "authentication",
     initialState: {
         token: "",
+        loginFailure: null,
     },
     reducers: {
         login: (state, action) => {
@@ -21,4 +21,4 @@ export const authenticationSlice = createSlice({
 });
 
 export const { login, logout, loginFailure } = authenticationSlice.actions;
-export default authenticationSlice.reducer;
+// export default authenticationSlice.reducer;
