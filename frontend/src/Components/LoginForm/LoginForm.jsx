@@ -49,8 +49,9 @@ const LoginForm = () => {
                     const token = responseJson.body.token;
                     console.log(responseJson);
                     console.log("Token: ", token);
-                    // dispatch(login(responseJson.token));
+
                     dispatch(login({ token }));
+                    localStorage.setItem("authToken", token);
                     navigate("/profile");
                 } else {
                     const error = await response.json();

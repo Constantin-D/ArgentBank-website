@@ -15,6 +15,9 @@ function Profile() {
 
     useEffect(() => {
         const fetchUserProfile = async () => {
+            localStorage.setItem("authToken", token);
+            console.log("Stored Token: ", localStorage.getItem("authToken"));
+
             try {
                 const response = await fetch(
                     "http://localhost:3001/api/v1/user/profile",

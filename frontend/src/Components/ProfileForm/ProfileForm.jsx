@@ -1,6 +1,7 @@
 import React, { useState } from "react"; 
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../../redux/reducers/userSlice"; // Import = action setUser
+// import { setUser } from "../../redux/reducers/userSlice";
+import { setUserName } from "../../redux/reducers/userSlice"; // Import = action setUser
 import "./profile-form.scss";
 
 const ProfileForm = () => {
@@ -9,50 +10,15 @@ const ProfileForm = () => {
     const dispatch = useDispatch();
 
     const [isEditing, setIsEditing] = useState(false);
-    const [userName, setUserName] = useState(user.userName);
-    const [firstName, setFirstName] = useState(user.firstName);
-    const [lastName, setLastName] = useState(user.lastName);
-
-    // useEffect(() => {
-    //     console.log(token); // Affiche le token dans la console
-    //     // useEffect pour encapsuler fetchUserProfile
-    //     const fetchUserProfile = async () => {
-    //         try {
-    //             const response = await fetch(
-    //                 "http://localhost:3001/api/v1/user/profile",
-    //                 {
-    //                     method: "POST", //POST = récupérer le profil
-    //                     headers: {
-    //                         Authorization: `Bearer ${token}`,
-    //                         // "Content-Type": "application/json",
-    //                     },
-    //                 }
-    //             );
-
-    //             const data = await response.json();
-    //             console.log(data);
-
-    //             if (response.ok) {
-    //                 // OK = maj l'état utilisateur et les valeurs locales
-    //                 console.log(data.body);
-    //                 dispatch(setUser(data.body));
-    //                 setUserName(data.body.userName);
-    //                 setFirstName(data.body.firstName);
-    //                 setLastName(data.body.lastName);
-    //             } else {
-    //                 console.error("Error fetching user profile:", data.message);
-    //             }
-    //         } catch (error) {
-    //             console.error("Failed to fetch user profile:", error);
-    //         }
-    //     };
-
-    //     fetchUserProfile();
-    // }, [dispatch, token]); // Correction de la syntaxe du hook useEffect
+    // const [userName, setUserName] = useState(user.userName);
+    // const [firstName, setFirstName] = useState(user.firstName);
+    // const [lastName, setLastName] = useState(user.lastName);
+    const [newUserName, setNewUserName] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        console.log(newUserName);
+        
         try {
             const response = await fetch(
                 "http://localhost:3001/api/v1/user/profile",
@@ -62,15 +28,17 @@ const ProfileForm = () => {
                         Authorization: `Bearer ${token}`, // = token dans les en-têtes
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ userName, firstName, lastName }),
+                    // body: JSON.stringify({ userName, firstName, lastName }),
+                    body: JSON.stringify({ userName: newUserName }),
                 }
             );
 
             const data = await response.json();
 
             if (response.ok) {
+                console.log(data.body)
                 // Si la maj est réussie = maj l'état utilisateur et désactive le mode édition
-                dispatch(setUser(data.body));
+                dispatch(setUserName(data.body.userName));
                 setIsEditing(false);
             } else {
                 console.error("Error updating user profile:", data.message);
@@ -82,10 +50,10 @@ const ProfileForm = () => {
 
     const handleCancel = () => {
         setIsEditing(false); // Désactive le mode édition
-        
-        setUserName(user.userName);
-        setFirstName(user.firstName);
-        setLastName(user.lastName);
+        setNewUserName(""); // Réinitialise le champ du nouveau username
+        // setUserName(user.userName);
+        // setFirstName(user.firstName);
+        // setLastName(user.lastName);
     };
 
     return (
@@ -94,7 +62,7 @@ const ProfileForm = () => {
                 <h1>
                     {isEditing
                         ? "Edit user info" // Affiche "Edit user info" en mode édition
-                        : `Welcome back\n${firstName} ${lastName}!`}{" "}
+                        : `Welcome back\n${user.firstName} ${user.lastName}!`}{" "}
                     {/* Affiche le message de bienvenue sinon !! */}
                 </h1>
                 {!isEditing && (
@@ -115,8 +83,9 @@ const ProfileForm = () => {
                             <input
                                 type="text"
                                 id="userName"
-                                value={userName} // Valeur liée à l'état local userName
-                                onChange={(e) => setUserName(e.target.value)} // = maj l'état local lors de la modification
+                                placeholder={user.userName} // = valeur par défaut
+                                value={newUserName} // Valeur liée à l'état local userName
+                                onChange={(e) => setNewUserName(e.target.value)} // = maj l'état local lors de la modification
                             />
                         </div>
                         <div className="form-group">
@@ -124,10 +93,9 @@ const ProfileForm = () => {
                             <input
                                 type="text"
                                 id="firstName"
-                                value={firstName}
+                                value={user.firstName}
                                 onChange={(e) => setFirstName(e.target.value)}
-                                disabled
-                                //disabled={!isEditing} 
+                                disabled 
                             />
                         </div>
                         <div className="form-group">
@@ -135,10 +103,9 @@ const ProfileForm = () => {
                             <input
                                 type="text"
                                 id="lastName"
-                                value={lastName}
+                                value={user.lastName}
                                 onChange={(e) => setLastName(e.target.value)}
                                 disabled
-                                // disabled={!isEditing} 
                             />
                         </div>
                         <div className="button-group">
