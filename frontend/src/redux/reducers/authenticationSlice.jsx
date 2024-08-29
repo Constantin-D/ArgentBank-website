@@ -20,5 +20,5 @@ export const authenticationSlice = createSlice({
     },
 });
 
-export const { login, logout, loginFailure } = authenticationSlice.actions;
-// export default authenticationSlice.reducer;
+export const { login, logout, loginFailure } = authenticationSlice.actions; 
+//actioon pour fonctionner avec le reducer

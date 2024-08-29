@@ -12,6 +12,7 @@ const LoginForm = () => {
     const [password, setPassword] = useState("");
     const [rememberMe, setRememberMe] = useState(false);
     const [errors, setErrors] = useState({ username: "", password: "" });
+    const [generalError, setGeneralError] = useState(""); // Nouvel état pour le message d'erreur général
 
     const validate = () => {
         let valid = true;
@@ -33,16 +34,23 @@ const LoginForm = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setGeneralError(""); 
+         setErrors({ username: "", password: "" });
+
+
         if (validate()) {
             let email = username;
             try {
-                const response = await fetch("http://localhost:3001/api/v1/user/login", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ email, password }),
-                });
+                const response = await fetch(
+                    "http://localhost:3001/api/v1/user/login",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ email, password }),
+                    }
+                );
 
                 if (response.ok) {
                     const responseJson = await response.json();
@@ -51,18 +59,34 @@ const LoginForm = () => {
                     console.log("Token: ", token);
 
                     dispatch(login({ token }));
-                    localStorage.setItem("authToken", token);
                     navigate("/profile");
                 } else {
                     const error = await response.json();
-                    dispatch(loginFailure({error: error.message}));
+                     setGeneralError(
+                         "Error in User Name and/or Password"
+                     );
+
+                    if (error.message.includes("User name")) {
+                        setUsername("");
+                    } else if (error.message.includes("password")) {
+                            setPassword("");
+                        setPassword(""); 
+                    }
+                    
+                    dispatch(loginFailure({ error: error.message })); //dispatch l'action loginFailure
                     console.log(error);
                 }
             } catch (error) {
                 console.log(error);
-                dispatch(loginFailure({error: error.message}));
-
+                setGeneralError("An error occurred. Please try again later.");
+                // setUsername(""); 
+                // setPassword("");
+                dispatch(loginFailure({ error: error.message }));
             }
+        } else {
+            setGeneralError("Please fill in the required fields");
+            // if (errors.username) setUsername("");
+            // if (errors.password) setPassword("");    
         }
     };
 
@@ -107,6 +131,9 @@ const LoginForm = () => {
             <button type="submit" className="sign-in-button">
                 Sign In
             </button>
+            {generalError && (
+                <div className="general-error">{generalError}</div> //Pour afficher le message d'erreur général
+            )}   
         </form>
     );
 };

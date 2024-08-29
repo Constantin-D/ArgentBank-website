@@ -6,7 +6,6 @@ import Transaction from "./../../Components/Transaction/Transaction";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./../../redux/reducers/userSlice";
 
-import "./profile.scss";
 
 function Profile() {
     const dispatch = useDispatch();

@@ -1,68 +1,68 @@
+@import "../../styles/variables.scss";
+
 .main.bg-dark {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #2c3e50;
+    background-color: $secondary-color;
+
+    .header {
+        color: $text-white-color;
+        margin-bottom: 2rem;
+    }
+
+    .edit-button {
+        border-color: $bord-butt-color;
+        background-color: $bord-butt-color;
+        color: $text-white-color;
+        font-weight: $font-weight-bold;
+        padding: 10px;
+    }
+
+    .profile-form {
+        padding: 2rem;
+        border-radius: 7px;
+        width: 100%;
+        max-width: 300px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+
+            label {
+                font-weight: normal;
+                flex: 1;
+                margin-right: 0.3rem;
+            }
+
+            input {
+                flex: 2;
+                padding: 0.5rem;
+                border: 1px solid;
+                border-radius: 3px;
+            }
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+
+            .save-button,
+            .cancel-button {
+                border-color: $bord-butt-color;
+                background-color: $bord-butt-color;
+                color: $text-white-color;
+                padding: 10px 60px;
+                border-radius: 4px;
+                cursor: pointer;
+                margin: 0 5px;
+            }
+        }
+    }
 }
-
-.header {
-    color: #fff;
-    margin-bottom: 2rem;
-}
-
-.edit-button {
-    border-color: #00bc77;
-    background-color: #00bc77;
-    color: #fff;
-    font-weight: bold;
-    padding: 10px;
-}
-
-.profile-form {
-    padding: 2rem;
-    border-radius: 7px;
-    width: 100%;
-    max-width: 300px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.form-group {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.form-group label {
-    font-weight: normal;
-    flex: 1;
-    margin-right: 0.3rem;
-}
-
-.form-group input {
-    flex: 2;
-    padding: 0.5rem;
-    border: 1px solid ;
-    border-radius: 3px;
-}
-
-.button-group {
-    display: flex;
-    justify-content: center;
-    margin-top: 2rem;
-}
-
-.button-group .save-button,
-.button-group .cancel-button {
-    border-color: #00bc77;
-    background-color: #00bc77;
-    color: #fff;
-    padding: 10px 60px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin: 0 5px;
-}
-
-

@@ -1,6 +1,5 @@
 import React, { useState } from "react"; 
 import { useDispatch, useSelector } from "react-redux";
-// import { setUser } from "../../redux/reducers/userSlice";
 import { setUserName } from "../../redux/reducers/userSlice"; // Import = action setUser
 import "./profile-form.scss";
 
@@ -10,9 +9,6 @@ const ProfileForm = () => {
     const dispatch = useDispatch();
 
     const [isEditing, setIsEditing] = useState(false);
-    // const [userName, setUserName] = useState(user.userName);
-    // const [firstName, setFirstName] = useState(user.firstName);
-    // const [lastName, setLastName] = useState(user.lastName);
     const [newUserName, setNewUserName] = useState("");
 
     const handleSubmit = async (e) => {
@@ -28,7 +24,6 @@ const ProfileForm = () => {
                         Authorization: `Bearer ${token}`, // = token dans les en-têtes
                         "Content-Type": "application/json",
                     },
-                    // body: JSON.stringify({ userName, firstName, lastName }),
                     body: JSON.stringify({ userName: newUserName }),
                 }
             );
@@ -51,9 +46,6 @@ const ProfileForm = () => {
     const handleCancel = () => {
         setIsEditing(false); // Désactive le mode édition
         setNewUserName(""); // Réinitialise le champ du nouveau username
-        // setUserName(user.userName);
-        // setFirstName(user.firstName);
-        // setLastName(user.lastName);
     };
 
     return (
