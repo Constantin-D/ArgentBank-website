@@ -1,24 +1,26 @@
 swagger: '2.0'
 info:
   title: Bank Argent API documentation
-  description: Contains all available API endpoints in this codebase
+  description: Contient tous les points de terminaison d'API disponibles dans cette base de code
   version: '1.0.0'
   termsOfService: 'http://swagger.io/terms/'
 host: localhost:3001
 basePath: /api/v1
 schemes:
   - http
+
 paths:
+  # Point de terminaison pour la connexion
   /user/login:
     post:
       tags:
-        - User Module
-      summary: Login
-      description: API for Login
+        - Module Utilisateur
+      summary: Connexion
+      description: API pour la connexion
       parameters:
         - in: body
           name: body
-          description: Login Payload
+          description: Payload de connexion
           required: true
           schema:
             $ref: '#/definitions/Login'
@@ -26,24 +28,25 @@ paths:
         - application/json
       responses:
         '200':
-          description: Login Successfully
+          description: Connexion réussie
           schema:
             $ref: '#/definitions/LoginResponse'
         '400':
-          description: Invalid Fields
+          description: Champs invalides
         '500':
-          description: Internal Server Error
+          description: Erreur interne du serveur
 
+  # Point de terminaison pour l'inscription
   /user/signup:
     post:
       tags:
-        - User Module
-      summary: Signup
-      description: API for Signup
+        - Module Utilisateur
+      summary: Inscription
+      description: API pour l'inscription
       parameters:
         - in: body
           name: body
-          description: Signup Payload
+          description: Payload d'inscription
           required: true
           schema:
             $ref: '#/definitions/User'
@@ -51,42 +54,44 @@ paths:
         - application/json
       responses:
         '200':
-          description: Signup Successfully
+          description: Inscription réussie
           schema:
             $ref: '#/definitions/ApiResponse'
         '400':
-          description: Invalid Fields
+          description: Champs invalides
         '500':
-          description: Internal Server Error
+          description: Erreur interne du serveur
 
+  # Point de terminaison pour le profil utilisateur
   /user/profile:
     post:
       security:
         - Bearer: []
       tags:
-        - User Module
-      summary: User Profile API
-      description: API for fetching a user profile
+        - Module Utilisateur
+      summary: API de profil utilisateur
+      description: API pour récupérer un profil utilisateur
       responses:
         '200':
-          description: User profile retrieved successfully
+          description: Profil utilisateur récupéré avec succès
           schema:
             $ref: '#/definitions/ApiResponse'
         '400':
-          description: Invalid Fields
+          description: Champs invalides
         '500':
-          description: Internal Server Error
+          description: Erreur interne du serveur
+
     put:
       security:
         - Bearer: []
       tags:
-        - User Module
-      summary: User Profile API
-      description: API for updating a user profile
+        - Module Utilisateur
+      summary: API de profil utilisateur
+      description: API pour mettre à jour un profil utilisateur
       parameters:
         - in: body
           name: body
-          description: Update user profile attributes
+          description: Mise à jour des attributs du profil utilisateur
           required: true
           schema:
             $ref: '#/definitions/UserProfile'
@@ -94,101 +99,135 @@ paths:
         - application/json
       responses:
         '200':
-          description: User profile updated successfully
+          description: Profil utilisateur mis à jour avec succès
           schema:
             $ref: '#/definitions/ApiResponse'
         '400':
-          description: Invalid Fields
+          description: Champs invalides
         '500':
-          description: Internal Server Error
+          description: Erreur interne du serveur
 
-  # Route pour récupérer toutes les transactions d'un mois spécifique
+  # Point de terminaison pour récupérer les transactions d'un mois spécifique
   /accounts/{accountId}/transactions/by-month/{month}:
     get:
       security:
         - Bearer: []
       tags:
-        - Transaction Module
-      summary: Get all transactions for a specific account and month
-      description: API for retrieving all transactions of a specific account for the given month.
+        - Module Transaction
+      summary: Obtenir toutes les transactions pour un compte et un mois spécifique
+      description: API pour récupérer toutes les transactions d'un compte spécifique pour le mois donné.
       parameters:
         - in: path
           name: accountId
           required: true
-          description: Unique ID of the account
+          description: ID unique du compte
           type: string
         - in: path
           name: month
           required: true
-          description: Month for which to retrieve transactions
+          description: Mois pour lequel récupérer les transactions
           type: string
       produces:
         - application/json
       responses:
         '200':
-          description: Transactions retrieved successfully
+          description: Transactions récupérées avec succès
           schema:
             $ref: '#/definitions/TransactionList'
         '404':
-          description: Account not found
+          description: Compte non trouvé
         '500':
-          description: Internal Server Error
+          description: Erreur interne du serveur
 
-  # Route pour récupérer et mettre à jour les détails d'une transaction spécifique
+  # Point de terminaison pour récupérer les détails d'une transaction spécifique
   /accounts/{accountId}/transactions/{transactionId}:
     get:
       security:
         - Bearer: []
       tags:
-        - Transaction Module
-      summary: Get details of a specific transaction
-      description: API for retrieving details of a specific transaction.
+        - Module Transaction
+      summary: Obtenir les détails d'une transaction spécifique
+      description: API pour récupérer les détails d'une transaction spécifique.
       parameters:
         - in: path
           name: accountId
           required: true
-          description: Unique ID of the account
+          description: ID unique du compte
           type: string
         - in: path
           name: transactionId
           required: true
-          description: Unique ID of the transaction
+          description: ID unique de la transaction
           type: string
       produces:
         - application/json
       responses:
         '200':
-          description: Transaction details retrieved successfully
+          description: Détails de la transaction récupérés avec succès
           schema:
             $ref: '#/definitions/Transaction'
         '404':
-          description: Transaction not found
+          description: Transaction non trouvée
         '500':
-          description: Internal Server Error
+          description: Erreur interne du serveur
 
-  # Route pour mettre à jour et supprimer les informations d'une transaction spécifique
+  # Point de terminaison pour les opérations sur le champ "details" d'une transaction spécifique
   /accounts/{accountId}/transactions/{transactionId}/details:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Module Transaction
+      summary: Obtenir uniquement les détails d'une transaction
+      description: API pour récupérer le champ "details" d'une transaction spécifique.
+      parameters:
+        - in: path
+          name: accountId
+          required: true
+          description: ID unique du compte
+          type: string
+        - in: path
+          name: transactionId
+          required: true
+          description: ID unique de la transaction
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Détails de la transaction récupérés avec succès
+          schema:
+            type: object
+            properties:
+              details:
+                type: string
+                description: Détails de la transaction
+        '404':
+          description: Transaction non trouvée
+        '500':
+          description: Erreur interne du serveur
+
     put:
       security:
         - Bearer: []
       tags:
-        - Transaction Module
-      summary: Update transaction details
-      description: API for updating the "details" field of a specific transaction.
+        - Module Transaction
+      summary: Mettre à jour les détails de la transaction
+      description: API pour mettre à jour le champ "details" d'une transaction spécifique.
       parameters:
         - in: path
           name: accountId
           required: true
-          description: Unique ID of the account
+          description: ID unique du compte
           type: string
         - in: path
           name: transactionId
           required: true
-          description: Unique ID of the transaction
+          description: ID unique de la transaction
           type: string
         - in: body
           name: body
-          description: Updated transaction details
+          description: Détails mis à jour de la transaction
           required: true
           schema:
             $ref: '#/definitions/Transaction'
@@ -196,73 +235,75 @@ paths:
         - application/json
       responses:
         '200':
-          description: Transaction "details" updated successfully
+          description: Détails de la transaction mis à jour avec succès
         '404':
-          description: Transaction not found
+          description: Transaction non trouvée
         '500':
-          description: Internal Server Error
+          description: Erreur interne du serveur
 
     delete:
       security:
         - Bearer: []
       tags:
-        - Transaction Module
-      summary: Delete transaction details
-      description: API for deleting the "details" field of a specific transaction.
+        - Module Transaction
+      summary: Supprimer les détails de la transaction
+      description: API pour supprimer le champ "details" d'une transaction spécifique.
       parameters:
         - in: path
           name: accountId
           required: true
-          description: Unique ID of the account
+          description: ID unique du compte
           type: string
         - in: path
           name: transactionId
           required: true
-          description: Unique ID of the transaction
+          description: ID unique de la transaction
           type: string
       produces:
         - application/json
       responses:
         '200':
-          description: Transaction "details" deleted successfully
+          description: Détails de la transaction supprimés avec succès
         '404':
-          description: Transaction not found
+          description: Transaction non trouvée
         '500':
-          description: Internal Server Error
+          description: Erreur interne du serveur
 
+# Définition des méthodes de sécurité
 securityDefinitions:
   Bearer:
     type: apiKey
     name: Authorization
     in: header
 
+# Définitions des schémas
 definitions:
   User:
     properties:
       email:
         type: string
-        description: user email
+        description: Email de l'utilisateur
       password:
         type: string
-        description: user password
+        description: Mot de passe de l'utilisateur
       firstName:
         type: string
-        description: user first name
+        description: Prénom de l'utilisateur
       lastName:
         type: string
-        description: user last name
+        description: Nom de l'utilisateur
       userName:
         type: string
-        description: user public name
+        description: Nom public de l'utilisateur
 
   Login:
     properties:
       email:
         type: string
-        description: user email
+        description: Email de l'utilisateur
       password:
         type: string
-        description: user password
+        description: Mot de passe de l'utilisateur
 
   ApiResponse:
     type: object

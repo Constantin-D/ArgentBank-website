@@ -58,6 +58,6 @@
         color: red;
         font-size: 0.9rem;
         margin-top: $font-size-base;
-        @include screen-reader-only;
+        @include text-center;
     }
 }

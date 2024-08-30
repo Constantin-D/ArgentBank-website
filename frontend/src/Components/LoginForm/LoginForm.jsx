@@ -34,9 +34,8 @@ const LoginForm = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setGeneralError(""); 
-         setErrors({ username: "", password: "" });
-
+        setGeneralError("");
+        setErrors({ username: "", password: "" });
 
         if (validate()) {
             let email = username;
@@ -62,31 +61,17 @@ const LoginForm = () => {
                     navigate("/profile");
                 } else {
                     const error = await response.json();
-                     setGeneralError(
-                         "Error in User Name and/or Password"
-                     );
-
-                    if (error.message.includes("User name")) {
-                        setUsername("");
-                    } else if (error.message.includes("password")) {
-                            setPassword("");
-                        setPassword(""); 
-                    }
-                    
-                    dispatch(loginFailure({ error: error.message })); //dispatch l'action loginFailure
+                    setGeneralError("Error in User Name and/or Password");
+                    dispatch(loginFailure({ error: error.message })); // Dispatch l'action loginFailure
                     console.log(error);
                 }
             } catch (error) {
                 console.log(error);
                 setGeneralError("An error occurred. Please try again later.");
-                // setUsername(""); 
-                // setPassword("");
                 dispatch(loginFailure({ error: error.message }));
             }
         } else {
             setGeneralError("Please fill in the required fields");
-            // if (errors.username) setUsername("");
-            // if (errors.password) setPassword("");    
         }
     };
 
@@ -133,7 +118,7 @@ const LoginForm = () => {
             </button>
             {generalError && (
                 <div className="general-error">{generalError}</div> //Pour afficher le message d'erreur général
-            )}   
+            )}
         </form>
     );
 };
