@@ -237,7 +237,7 @@ paths:
         '200':
           description: Détails de la transaction mis à jour avec succès
         '404':
-          description: Transaction non trouvée
+          description: Détails d'une transaction non trouvée
         '500':
           description: Erreur interne du serveur
 

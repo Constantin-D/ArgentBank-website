@@ -6,7 +6,7 @@ export const userSlice = createSlice({
         userName: "",
         firstName: "",
         lastName: "",
-        status: "idle", // idle, loading, succeeded, failed
+        status: "idle", // idle, loading, succeeded, failed 
         error: null,
     },
     reducers: {
