@@ -54,7 +54,7 @@ const ProfileForm = () => {
                 <h1>
                     {isEditing
                         ? "Edit user info" // Affiche "Edit user info" en mode édition
-                        : `Welcome back\n${user.firstName} ${user.lastName}!`}{" "}
+                        : `Welcome back\n${user.firstName} ${user.lastName}!`}
                     {/* Affiche le message de bienvenue sinon !! */}
                 </h1>
                 {!isEditing && (
