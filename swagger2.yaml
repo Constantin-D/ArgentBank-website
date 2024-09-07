@@ -178,6 +178,10 @@ paths:
                 format: date-time
               description:
                 type: string
+              category: 
+                type: string
+              note: 
+                type: string
         '404':
           description: Transaction non trouvée
         '500':
@@ -208,8 +212,6 @@ paths:
           schema:
             type: object
             properties:
-              details:
-                type: string
               category:
                 type: string
               note:
@@ -300,6 +302,10 @@ definitions:
         type: string
         format: date-time
       description:
+        type: string
+      category: 
+        type: string
+      note:  
         type: string
 
   TransactionList:
