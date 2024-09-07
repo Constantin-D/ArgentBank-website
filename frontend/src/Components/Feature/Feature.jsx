@@ -32,7 +32,6 @@ function Features() {
     return (
         <section className="features">
             <h2 className="sr-only">Features</h2>
-            {/* <div className="features-container"> */}
             {featuresData.map((feature, index) => (
                 <div key={index} className="feature-item">
                     <img
